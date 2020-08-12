@@ -45,7 +45,6 @@ t_format	write_width(t_format fmt, int len)
 
 t_format	htoa(long n, t_format fmt, char *base)
 {
-	//base = "0123456789ABCDEF";
 	if (n > 15)
 	{
 		fmt = dtoh(n / 16, fmt, base);
