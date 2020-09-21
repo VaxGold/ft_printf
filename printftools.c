@@ -6,14 +6,14 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:19:08 by omercade          #+#    #+#             */
-/*   Updated: 2020/03/06 13:42:04 by omercade         ###   ########.fr       */
+/*   Updated: 2020/09/21 18:54:11 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "ft_printf.h"
 
-int		ft_putstr(char *str)
+int			ft_putstr(char *str)
 {
 	int i;
 	int c;
@@ -28,31 +28,61 @@ int		ft_putstr(char *str)
 	return (c);
 }
 
-t_format	write_width(t_format fmt, int len)
+t_format	ft_writewidth(int n, char cwidth, t_format fmt)
 {
 	int i;
 
 	i = 0;
-	while (i++ < fmt.width - len)
+	while (i < n)
 	{
-		if (fmt.zeros == TRUE && fmt.prc < 1 && fmt.jleft == FALSE)
-			fmt.total += write(1, '0', 1);
-		else
-			fmt.total += write(1, ' ', 1);
+		fmt.total += write (1, &cwidth, 1);
+		i++;
 	}
 	return (fmt);
 }
 
-t_format	htoa(long n, t_format fmt, char *base)
+int			ft_itoa_base(int n, char *base, int mode)
 {
-	if (n > 15)
+	int nbase;
+	int total;
+
+	nbase = ft_strlen(base);
+	total = 0;
+	if (n < nbase && n > -nbase)
 	{
-		fmt = dtoh(n / 16, fmt, base);
-		fmt->total += write(1, &base[n % 16], 1);
+		if (n < 0)
+		{
+			if (mode == 0)
+				total += write(1, '-', 1);
+			n = -n;
+		}
+		if (mode == 0)
+			total += write(1, base[n], 1);
 	}
 	else
 	{
-		fmt->total += write(1, &base[n], 1);
+		total += ft_itoa_base(n / nbase, base, mode);
+		if (mode == 0)
+			total += write(1, base[n%nbase], 1);
 	}
-	return (fmt);
+	return(total);
+}
+
+int			ft_utoa(unsigned int n, char *base, int mode)
+{
+	int total;
+
+	total = 0;
+	if (n < 10)
+	{
+		if (mode == 0)
+			total += write(1, base[n], 1);
+	}
+	else
+	{
+		total += ft_utoa(n / 10, base, mode);
+		if (mode == 0)
+			total += write(1, base[n%10], 1);
+	}
+	return(total);
 }

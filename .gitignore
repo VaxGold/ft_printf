@@ -54,4 +54,6 @@ dkms.conf
 # Custom
 *.swp
 libft
+test.c
 .DS_Store
+.vscode
