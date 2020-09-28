@@ -6,15 +6,15 @@
 #    By: omercade <omercade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/19 19:01:37 by omercade          #+#    #+#              #
-#    Updated: 2020/09/17 17:54:10 by omercade         ###   ########.fr        #
+#    Updated: 2020/09/28 19:42:23 by omercade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS    =	ft_printf.c/
+SRCS    =	ft_printf.c ft_writer1.c ft_writer2.c printftools.c
 			
 OBJS    = ${SRCS:.c=.o}
 
-NAME    = ft_printf.a
+NAME    = libftprintf.a 
 
 CC      = cc
 
@@ -25,8 +25,7 @@ CFLAGS  = -Wall -Werror -Wextra
 .c.o:
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 $(NAME):    ${OBJS}
-	ar rc  ${NAME} ${OBJS}
-	ranlib ${NAME}
+	ar rcs  ${NAME} ${OBJS}
 
 all:       ${NAME}
 
@@ -36,6 +35,6 @@ clean:
 fclean:     clean
 		${RM} ${NAME}
 
-re:         fclean
+re:         fclean all
 
 .PHONY:	clean all fclean re

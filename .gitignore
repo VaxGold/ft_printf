@@ -55,5 +55,6 @@ dkms.conf
 *.swp
 libft
 test.c
+printf_lover_v2
 .DS_Store
 .vscode

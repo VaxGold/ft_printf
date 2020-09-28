@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:19:08 by omercade          #+#    #+#             */
-/*   Updated: 2020/09/21 18:54:11 by omercade         ###   ########.fr       */
+/*   Updated: 2020/09/24 20:01:59 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			ft_putstr(char *str)
 	int c;
 
 	i = 0;
-	c = 0:
+	c = 0;
 	while (str[i] != 0)
 	{
 		c += write(1, &str[i], 1);
@@ -53,17 +53,23 @@ int			ft_itoa_base(int n, char *base, int mode)
 		if (n < 0)
 		{
 			if (mode == 0)
-				total += write(1, '-', 1);
+				total += write(1, "-", 1);
+			else
+				total += 1;
 			n = -n;
 		}
 		if (mode == 0)
-			total += write(1, base[n], 1);
+			total += write(1, &base[n], 1);
+		else
+				total += 1;
 	}
 	else
 	{
-		total += ft_itoa_base(n / nbase, base, mode);
+		total += ft_itoa_base((n / nbase), base, mode);
 		if (mode == 0)
-			total += write(1, base[n%nbase], 1);
+			total += write(1, &base[n%nbase], 1);
+		else
+			total += 1;
 	}
 	return(total);
 }
@@ -76,13 +82,17 @@ int			ft_utoa(unsigned int n, char *base, int mode)
 	if (n < 10)
 	{
 		if (mode == 0)
-			total += write(1, base[n], 1);
+			total += write(1, &base[n], 1);
+		else
+				total += 1;
 	}
 	else
 	{
 		total += ft_utoa(n / 10, base, mode);
 		if (mode == 0)
-			total += write(1, base[n%10], 1);
+			total += write(1, &	base[n%10], 1);
+		else
+				total += 1;
 	}
 	return(total);
 }
