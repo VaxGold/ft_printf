@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:19:14 by omercade          #+#    #+#             */
-/*   Updated: 2020/09/28 19:22:58 by omercade         ###   ########.fr       */
+/*   Updated: 2020/09/30 20:01:17 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 	while (str[fmt.i + n] && ft_strchr("-*01234456789", str[fmt.i + n]) > 0)
 	{
 		if (str[fmt.i + n] == '-')
-			fmt.jleft = TRUE;
+			fmt.jleft = FALSE;
 		else if (str[fmt.i + n] == '0' && n == 1)
 			fmt.zeros = TRUE;
 		else if (str[fmt.i + n] == '*')
@@ -71,7 +71,7 @@ t_format		ft_init(t_format fmt)
 	fmt.width = 0;
 	fmt.prc = 0;
 	fmt.zeros = FALSE;
-	fmt.jleft = FALSE;
+	fmt.jleft = TRUE;
 	return (fmt);
 }
 

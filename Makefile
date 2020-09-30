@@ -6,35 +6,55 @@
 #    By: omercade <omercade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/19 19:01:37 by omercade          #+#    #+#              #
-#    Updated: 2020/09/28 19:42:23 by omercade         ###   ########.fr        #
+#    Updated: 2020/09/30 19:26:05 by omercade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+LIBROOT	=	./libft
+
+MAKE	=	make
+
 SRCS    =	ft_printf.c ft_writer1.c ft_writer2.c printftools.c
 			
-OBJS    = ${SRCS:.c=.o}
+OBJS    =	${SRCS:.c=.o}
 
-NAME    = libftprintf.a 
+INCLUDE	=	ft_printf.h
 
-CC      = cc
+NAME    =	libftprintf.a 
 
-RM      = rm -f
+CC      =	cc
 
-CFLAGS  = -Wall -Werror -Wextra
+RM      =	rm -f
 
-.c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-$(NAME):    ${OBJS}
-	ar rcs  ${NAME} ${OBJS}
+LIB		=	ar rcs
 
-all:       ${NAME}
+CFLAGS  =	-Wall -Werror -Wextra
 
-clean:
-		${RM} ${OBJS} ${OBJS_BONUS}
+IFLAGS	=	-I$(LIBROOT)
 
-fclean:     clean
+.c.o:	$(INCLUDE)
+	${CC} ${CFLAGS} $(IFLAGS) -c $< -o ${<:.c=.o}
+$(NAME):   libft_all ${OBJS}
+	cp $(LIBROOT)/libft.a $(NAME)
+	$(LIB) ${NAME} ${OBJS}
+
+all:      ${NAME}
+
+clean:	libft_clean
+		${RM} ${OBJS}
+
+fclean:     libft_fclean clean
 		${RM} ${NAME}
 
-re:         fclean all
+re:        libft_fclean fclean all
+
+libft_all:
+	$(MAKE) -C $(LIBROOT) all
+
+libft_clean:
+	$(MAKE) -C $(LIBROOT) clean
+
+libft_fclean:
+	$(MAKE) -C $(LIBROOT) fclean
 
 .PHONY:	clean all fclean re
