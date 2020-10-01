@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:19:14 by omercade          #+#    #+#             */
-/*   Updated: 2020/09/30 20:01:17 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/01 20:43:26 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 	int 		n;
 
 	n = 1;
-	while (str[fmt.i + n] && ft_strchr("-*01234456789", str[fmt.i + n]) > 0)
+	while (str[fmt.i + n] && ft_strchr("-*0123456789", str[fmt.i + n]) > 0)
 	{
 		if (str[fmt.i + n] == '-')
-			fmt.jleft = FALSE;
+			fmt.jleft = TRUE;
 		else if (str[fmt.i + n] == '0' && n == 1)
 			fmt.zeros = TRUE;
 		else if (str[fmt.i + n] == '*')
@@ -56,10 +56,10 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 	}
 	if (str[fmt.i + n] == '.')
 	{
+		n += str[fmt.i + n + 1] == '-' ? 2 : 0;
 		while (str[fmt.i + (++n)] >= '0' && str[fmt.i + n] <= '9')
 			fmt.prc = fmt.prc * 10 + (str[fmt.i + n++] - '0');
-		if (str[fmt.i + n] == '*')
-			fmt.prc = va_arg(vl, int);
+		fmt.prc += str[fmt.i + n++] == '*' ? va_arg(vl, int) + 1 : 0;
 	}
 	fmt.i = fmt.i + n - 1;
 	fmt = var_choice(str, vl, fmt);
@@ -69,9 +69,9 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 t_format		ft_init(t_format fmt)
 {
 	fmt.width = 0;
-	fmt.prc = 0;
+	fmt.prc = -1;
 	fmt.zeros = FALSE;
-	fmt.jleft = TRUE;
+	fmt.jleft = FALSE;
 	return (fmt);
 }
 
@@ -85,12 +85,12 @@ int				ft_printf(char *str, ...)
 	va_start(vl, str);
 	while(str[fmt.i] != 0)
 	{
+		fmt = ft_init(fmt);
 		if(str[fmt.i] == '%')
 			fmt = flag_check(str, vl, fmt);
 		else
 			fmt.total += write(1, &str[fmt.i], 1);
 		fmt.i++;
-		fmt = ft_init(fmt);
 	}
 	va_end(vl);
 	total = fmt.total;

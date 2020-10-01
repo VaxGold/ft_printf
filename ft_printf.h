@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:57:33 by omercade          #+#    #+#             */
-/*   Updated: 2020/09/30 20:01:19 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/01 18:16:11 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 
 #include <stdarg.h>
+#include <stdio.h>
 #include "./libft/libft.h"
 
 #define TRUE 1
