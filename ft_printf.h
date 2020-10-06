@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:57:33 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/01 18:16:11 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/06 18:53:44 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct	s_format
 }				t_format;
 
 t_format		var_choice(char *str, va_list vl, t_format fmt);
+t_format		width_check(char *str, va_list vl, t_format fmt);
+t_format		prc_check(char *str, va_list vl, t_format fmt);
 t_format		flag_check(char *str, va_list vl, t_format fmt);
-t_format		ft_init (t_format fmt);
 int				ft_printf(char *str, ...);
 
 t_format		char_writer(va_list vl, t_format fmt);

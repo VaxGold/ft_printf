@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:19:14 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/01 20:43:26 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/06 18:53:43 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_format		var_choice(char *str, va_list vl, t_format fmt)
 {
-	fmt.i++;
+	fmt.i++;                                                    
 	if (str[fmt.i] == 'c')
 		fmt = char_writer(vl, fmt);
 	else if (str[fmt.i] == 's')
@@ -37,9 +37,9 @@ t_format		var_choice(char *str, va_list vl, t_format fmt)
 	return (fmt);
 }
 
-t_format		flag_check(char *str, va_list vl, t_format fmt)
+t_format		width_check(char *str, va_list vl, t_format fmt)
 {
-	int 		n;
+	int n;
 
 	n = 1;
 	while (str[fmt.i + n] && ft_strchr("-*0123456789", str[fmt.i + n]) > 0)
@@ -54,24 +54,49 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 			fmt.width = fmt.width * 10 + (str[fmt.i + n] - '0');
 		n++;
 	}
-	if (str[fmt.i + n] == '.')
-	{
-		n += str[fmt.i + n + 1] == '-' ? 2 : 0;
-		while (str[fmt.i + (++n)] >= '0' && str[fmt.i + n] <= '9')
-			fmt.prc = fmt.prc * 10 + (str[fmt.i + n++] - '0');
-		fmt.prc += str[fmt.i + n++] == '*' ? va_arg(vl, int) + 1 : 0;
-	}
-	fmt.i = fmt.i + n - 1;
-	fmt = var_choice(str, vl, fmt);
+	fmt.i += (n - 1);
 	return (fmt);
 }
 
-t_format		ft_init(t_format fmt)
+t_format		prc_check(char *str, va_list vl, t_format fmt)
 {
-	fmt.width = 0;
-	fmt.prc = -1;
-	fmt.zeros = FALSE;
-	fmt.jleft = FALSE;
+	int n;
+
+	n = 1;
+	if (str[fmt.i + n] == '-')
+	{
+		while (str[fmt.i + (++n)] >= '0' && str[fmt.i + n] <= '9')
+			n++;
+	}
+	else if (str[fmt.i + n] >= '0' && str[fmt.i + n] <= '9')
+	{
+		fmt.prc = 0;
+		while (str[fmt.i + n] >= '0' && str[fmt.i + n] <= '9')
+		{
+			fmt.prc = fmt.prc * 10 + (str[fmt.i + n] - '0');
+			n++;
+		}
+	}
+	else if (str[fmt.i + n] == '*')
+		fmt.prc = va_arg(vl, int);
+	else
+		fmt.prc = 0;
+	fmt.i += (n - 1);
+	return (fmt);
+}
+
+t_format		flag_check(char *str, va_list vl, t_format fmt)
+{
+	if (ft_strchr("-*0123456789", str[fmt.i + 1]))
+	{
+		fmt = width_check(str, vl, fmt);
+	}
+	if (str[fmt.i + 1] == '.')
+	{
+		fmt.i++;
+		fmt = prc_check(str, vl, fmt);
+	}
+	fmt = var_choice(str, vl, fmt);
 	return (fmt);
 }
 
@@ -85,7 +110,10 @@ int				ft_printf(char *str, ...)
 	va_start(vl, str);
 	while(str[fmt.i] != 0)
 	{
-		fmt = ft_init(fmt);
+		fmt.width = 0;
+		fmt.prc = -1;
+		fmt.zeros = FALSE;
+		fmt.jleft = FALSE;
 		if(str[fmt.i] == '%')
 			fmt = flag_check(str, vl, fmt);
 		else
