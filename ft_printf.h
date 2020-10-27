@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:57:33 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/06 18:53:44 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/27 18:19:18 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_format
 {
 	int			width;
 	int			prc;
-	int			zeros;
+	char		zeros;
 	int			jleft;
 	int			total;
 	int			i;
@@ -49,7 +49,6 @@ t_format		unsighex_writer(va_list vl, t_format fmt);
 
 int				ft_putstr(char *str);
 t_format		ft_writewidth(int n, char cwidth, t_format fmt);
-int				ft_itoa_base(int n, char *base, int mode);
-int				ft_utoa(unsigned int n, char *base, int mode);
+char			*ft_itoa_base(long long int n, char *base);
 
 #endif

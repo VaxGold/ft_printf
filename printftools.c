@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:19:08 by omercade          #+#    #+#             */
-/*   Updated: 2020/09/30 20:29:54 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/27 18:52:40 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,58 +41,45 @@ t_format	ft_writewidth(int n, char cwidth, t_format fmt)
 	return (fmt);
 }
 
-int			ft_itoa_base(int n, char *base, int mode)
+int			ft_ndigit(long long int n, int nbase)
 {
-	int nbase;
 	int total;
 
-	nbase = ft_strlen(base);
-	total = 0;
-	if (n < nbase && n > -nbase)
-	{
-		if (n < 0)
-		{
-			if (mode == 0)
-				total += write(1, "-", 1);
-			else
-				total += 1;
-			n = -n;
-		}
-		if (mode == 0)
-			total += write(1, &base[n], 1);
-		else
-				total += 1;
-	}
+	if (n < 0)
+		total = 1;
 	else
+		total = 0;
+	while(!(n < nbase && n > -nbase))
 	{
-		total += ft_itoa_base((n / nbase), base, mode);
-		if (mode == 0)
-			total += write(1, &base[n%nbase], 1);
-		else
-			total += 1;
+		n /= nbase;
+		total++;
 	}
-	return(total);
+	return (total + 1);
 }
 
-int			ft_utoa(unsigned int n, char *base, int mode)
+char		*ft_itoa_base(long long int n, char *base)
 {
-	int total;
+	int		nbase;
+	int		dig;
+	char	*str;
 
-	total = 0;
-	if (n < 10)
+	nbase = ft_strlen(base);
+	dig = ft_ndigit(n, nbase);
+	if ((str = malloc(dig + 1)) == 0)
+		return (NULL);
+	str[dig] = '\0';
+	if (n < 0)
 	{
-		if (mode == 0)
-			total += write(1, &base[n], 1);
-		else
-				total += 1;
+		n = -n;
+		str[0] = '-';
 	}
-	else
+	dig--;
+	while (!(n < nbase && n > -nbase))
 	{
-		total += ft_utoa(n / 10, base, mode);
-		if (mode == 0)
-			total += write(1, &	base[n%10], 1);
-		else
-				total += 1;
+		str[dig] = base[n%nbase];
+		n /= nbase;
+		dig--;
 	}
-	return(total);
+	str[dig] = base[n%nbase];
+	return(str);
 }

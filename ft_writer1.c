@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:28:40 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/06 18:53:42 by omercade         ###   ########.fr       */
+/*   Updated: 2020/10/22 21:04:01 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ t_format			ptr_writer(va_list vl, t_format fmt)
 {
 	void		*ptr;
 	long int	nptr;
-	int			i;
-	int			len;
+	//int			i;
+	//int			len;
 	char		*base;
 
 	base = ft_strdup("0123456789abcdef");
 	ptr = va_arg(vl, void *);
 	nptr = (long)&ptr;
-	len = ft_itoa_base(nptr, base, 1) + 2;
+	/*len = ft_itoa_base(nptr, base, 1) + 2;
 	i = 0;
 	if (fmt.jleft == FALSE)
 		fmt = ft_writewidth(fmt.width - len, ' ', fmt);
 	fmt.total += ft_putstr("0x");
 	fmt.total += ft_itoa_base(nptr, base, 0);
 	if (fmt.jleft == TRUE)
-		fmt = ft_writewidth(fmt.width - len, ' ', fmt);
+		fmt = ft_writewidth(fmt.width - len, ' ', fmt);*/
 	return (fmt);
 }
 
