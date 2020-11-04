@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:28:56 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/28 19:51:57 by omercade         ###   ########.fr       */
+/*   Updated: 2020/11/04 18:12:10 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_format			int_writer(va_list vl, t_format fmt)
 		fmt.total += write(1, "0", 1);
 	fmt.total += ft_putstr(&str[i]);
 	if (fmt.jleft == TRUE)
-		fmt = ft_writewidth(nsp, fmt.zeros, fmt);
+		fmt = ft_writewidth(nsp, ' ', fmt);
 	free(str);
 	return (fmt);
 }
@@ -45,7 +45,7 @@ t_format			unsig_writer(va_list vl, t_format fmt)
 {
 	int				i;
 	int				nsp;
-	unsigned int    n;
+	unsigned int	n;
 	char			*str;
 
 	n = va_arg(vl, unsigned int);
@@ -62,7 +62,7 @@ t_format			unsig_writer(va_list vl, t_format fmt)
 		fmt.total += write(1, "0", 1);
 	fmt.total += ft_putstr(&str[i]);
 	if (fmt.jleft == TRUE)
-		fmt = ft_writewidth(nsp, fmt.zeros, fmt);
+		fmt = ft_writewidth(nsp, ' ', fmt);
 	free(str);
 	return (fmt);
 }
@@ -71,7 +71,7 @@ t_format			hex_writer(va_list vl, t_format fmt)
 {
 	int				i;
 	int				nsp;
-	unsigned int    n;
+	unsigned int	n;
 	char			*str;
 
 	n = va_arg(vl, int);
@@ -88,7 +88,7 @@ t_format			hex_writer(va_list vl, t_format fmt)
 		fmt.total += write(1, "0", 1);
 	fmt.total += ft_putstr(&str[i]);
 	if (fmt.jleft == TRUE)
-		fmt = ft_writewidth(nsp, fmt.zeros, fmt);
+		fmt = ft_writewidth(nsp, ' ', fmt);
 	free(str);
 	return (fmt);
 }
@@ -97,7 +97,7 @@ t_format			unsighex_writer(va_list vl, t_format fmt)
 {
 	int				i;
 	int				nsp;
-	unsigned int    n;
+	unsigned int	n;
 	char			*str;
 
 	n = va_arg(vl, int);
@@ -114,7 +114,7 @@ t_format			unsighex_writer(va_list vl, t_format fmt)
 		fmt.total += write(1, "0", 1);
 	fmt.total += ft_putstr(&str[i]);
 	if (fmt.jleft == TRUE)
-		fmt = ft_writewidth(nsp, fmt.zeros, fmt);
+		fmt = ft_writewidth(nsp, ' ', fmt);
 	free(str);
 	return (fmt);
 }

@@ -6,19 +6,19 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:57:33 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/27 20:13:14 by omercade         ###   ########.fr       */
+/*   Updated: 2020/11/04 18:15:43 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <stdio.h>
-#include "./libft/libft.h"
+# include <stdarg.h>
+# include <stdio.h>
+# include "./libft/libft.h"
 
-#define TRUE 1
-#define FALSE 0
+# define TRUE 1
+# define FALSE 0
 
 typedef struct	s_format
 {

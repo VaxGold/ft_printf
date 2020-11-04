@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:19:14 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/28 19:36:03 by omercade         ###   ########.fr       */
+/*   Updated: 2020/11/04 18:16:55 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_format		var_choice(char *str, va_list vl, t_format fmt)
 		fmt = unsighex_writer(vl, fmt);
 	else if (str[fmt.i] == '%')
 		fmt = per_writer(fmt);
+	else
+		fmt.i--;
 	return (fmt);
 }
 
@@ -103,7 +105,11 @@ t_format		flag_check(char *str, va_list vl, t_format fmt)
 		fmt.i++;
 		fmt = prc_check(str, vl, fmt);
 	}
-	if (fmt.prc >= 0 || fmt.jleft == TRUE)
+	if ((fmt.prc >= 0 || fmt.jleft == TRUE) && str[fmt.i + 1] != '%')
+	{
+		fmt.zeros = ' ';
+	}
+	if (ft_strchr("cs", str[fmt.i + 1]))
 		fmt.zeros = ' ';
 	fmt = var_choice(str, vl, fmt);
 	return (fmt);
@@ -118,13 +124,13 @@ int				ft_printf(char *str, ...)
 	fmt.i = 0;
 	fmt.total = 0;
 	va_start(vl, str);
-	while  (str[fmt.i] != 0)
+	while (str[fmt.i] != 0)
 	{
 		fmt.width = 0;
 		fmt.prc = -1;
 		fmt.zeros = ' ';
 		fmt.jleft = FALSE;
-		if(str[fmt.i] == '%')
+		if (str[fmt.i] == '%')
 			fmt = flag_check(str, vl, fmt);
 		else
 			fmt.total += write(1, &str[fmt.i], 1);

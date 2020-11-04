@@ -6,7 +6,7 @@
 /*   By: omercade <omercade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:19:08 by omercade          #+#    #+#             */
-/*   Updated: 2020/10/27 20:13:17 by omercade         ###   ########.fr       */
+/*   Updated: 2020/11/04 18:13:37 by omercade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_format	ft_writewidth(int n, char cwidth, t_format fmt)
 	i = 0;
 	while (i < n)
 	{
-		fmt.total += write (1, &cwidth, 1);
+		fmt.total += write(1, &cwidth, 1);
 		i++;
 	}
 	return (fmt);
@@ -49,7 +49,7 @@ int			ft_ndigit(long long int n, int nbase)
 		total = 1;
 	else
 		total = 0;
-	while(!(n < nbase && n > -nbase))
+	while (!(n < nbase && n > -nbase))
 	{
 		n /= nbase;
 		total++;
@@ -76,10 +76,10 @@ char		*ft_itoa_base(long long int n, char *base)
 	dig--;
 	while (!(n < nbase && n > -nbase))
 	{
-		str[dig] = base[n%nbase];
+		str[dig] = base[n % nbase];
 		n /= nbase;
 		dig--;
 	}
-	str[dig] = base[n%nbase];
-	return(str);
+	str[dig] = base[n % nbase];
+	return (str);
 }
